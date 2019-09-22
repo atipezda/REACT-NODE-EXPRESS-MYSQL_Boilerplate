@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import '../css/login.css';
-import thermometerImg from '../img/thermo.png';
 
 export default class LoginRoute extends Component {
   constructor(props) {
@@ -43,7 +42,6 @@ export default class LoginRoute extends Component {
     axios
       .get('/auth/token')
       .then((res) => {
-        console.log(res);
         if (res.data.success) {
           // eslint-disable-next-line
           this.props.history.push('/');
@@ -55,37 +53,39 @@ export default class LoginRoute extends Component {
   }
 
   render() {
-    const { login, passwd } = this.state;
-    const errorHideCSS = { opacity: 0, pointerEvents: 'none' };
+    const { login, passwd, isError } = this.state;
+    const errorHideCSS = { maxHeight: '0', pointerEvents: 'none' };
     return (
       <div id="login">
         <div id="cont">
+          <h4>App Name</h4>
           <form action="/auth/login" method="POST">
-            <h4>Login</h4>
             <input
+              placeholder="Login"
               type="text"
               name="login"
               value={login}
+              required
               onChange={this.handleInput}
             />
-            <h4>Hasło</h4>
             <input
+              placeholder="Hasło"
               type="password"
               name="passwd"
               value={passwd}
+              required
               onChange={this.handleInput}
             />
             <button type="submit" onClick={this.submit}>
-              Wyslij
+              zaloguj
             </button>
 
-            <p style={this.state.isError ? null : errorHideCSS} id="alert">
-              Błędne dane logowania
-            </p>
+            <div style={isError ? null : errorHideCSS} id="alert">
+              <p>Błędne dane logowania</p>
+            </div>
           </form>
           <div id="pic">
-            <img alt="" src={thermometerImg} />
-            <p>Termometry - Handi Systems</p>
+            <p>Handi Systems solution</p>
           </div>
         </div>
       </div>

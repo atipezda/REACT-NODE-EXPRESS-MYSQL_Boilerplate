@@ -16,7 +16,6 @@ export default class AuthorizedComp extends Component {
     axios
       .get('/auth/token/')
       .then((res) => {
-        console.log(res);
         if (!res.data.success) {
           this.setState({ authorized: false });
         } else if (res.data.success) {

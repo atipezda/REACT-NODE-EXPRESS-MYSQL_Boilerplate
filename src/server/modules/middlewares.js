@@ -3,7 +3,6 @@ const tokenHash = require('../modules/jwt');
 
 module.exports = {
   checkToken: (req, res, next) => {
-    console.log(req);
     const token = req.cookies.jwt;
     if (token) {
       jwt.verify(token, tokenHash, (err, decoded) => {
@@ -22,5 +21,6 @@ module.exports = {
         message: 'Auth token is not supplied'
       });
     }
+    return console.error('middleware checkToken error');
   }
 };

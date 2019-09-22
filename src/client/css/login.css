@@ -1,32 +1,31 @@
 #login {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-size: 22px;
-    color: white;
+    font-size: 25px;
+    color: var(--main-color);
 }
 
 #login #cont {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.349);
     border-radius: 10px;
     padding: 20px;
-    background: linear-gradient(45deg, rgba(255, 3, 3, 1) 0%, rgba(83, 66, 128, 1) 100%);
 }
 
 #login form {
-    /* display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center; */
+    justify-content: flex-start;
+    align-items: center;
     margin: 0 auto;
     height: 30vh;
-    width: 25vw;
+    width: 30vw;
     border-radius: 10px 0 0 10px;
     padding: 20px;
 }
@@ -40,49 +39,57 @@
 
 #login button {
     width: 50%;
-    margin: 2vh 0;
-    float: right;
+    margin: 2vh auto;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--main-color);
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+
 }
 
 #login input {
-    border: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.233);
+    border: 1px solid var(--main-color);
     border-radius: 10px;
     padding: 2px 10px;
     width: 90%;
-    height: 20px;
-    margin-bottom: auto;
+    height: 30px;
+    margin: 10px auto;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+#login p {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: rgb(190, 190, 190);
+}
+
+#login input::placeholder {
+    color: rgb(190, 190, 190);
+    font-size: 14px;
 }
 
 #login #alert {
-    color: white;
     background-color: rgb(255, 255, 255);
     width: 100%;
     padding: 10px 5px;
     text-align: center;
     border-radius: 10px;
     overflow: hidden;
-    transition: 2s;
+    max-height: 110vh;
+    transition: 1s;
     opacity: 1;
-    color: red;
 }
 
-#login #pic {
-    height: 30vh;
-    width: 20vw;
-    border-radius: 0 10px 10px 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    margin-bottom: -15px;
-    margin-top: auto;
-    color: rgb(184, 184, 184);
+#login input:valid {
+    color: white;
+    background-color: var(--main-color);
 }
 
-#login #pic img {
-    height: 90%;
-    overflow: hidden
+#login #alert p {
+    font-size: 18px;
+    letter-spacing: 0;
+    color: rgb(255, 0, 0) !important;
 }
