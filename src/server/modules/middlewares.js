@@ -21,6 +21,6 @@ module.exports = {
         message: 'Auth token is not supplied'
       });
     }
-    return console.error('middleware checkToken error');
+    return 0;
   }
 };
