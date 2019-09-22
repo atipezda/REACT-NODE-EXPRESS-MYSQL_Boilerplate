@@ -40,8 +40,8 @@ module.exports = {
     host: '0.0.0.0',
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:9761',
-      '/auth': 'http://localhost:9761'
+      '/api': 'http://localhost:3100',
+      '/auth': 'http://localhost:3100'
     }
   },
   plugins: [

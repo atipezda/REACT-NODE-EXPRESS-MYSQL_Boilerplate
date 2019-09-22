@@ -18,4 +18,4 @@ app.use(bodyParser.json());
 app.use('/auth', authRoute);
 app.use('/', appRoute);
 
-app.listen(9761, () => {});
+app.listen(3100, () => {});
