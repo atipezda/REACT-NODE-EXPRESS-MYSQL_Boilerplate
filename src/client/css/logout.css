@@ -1,0 +1,9 @@
+#logout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    height: 80vh;
+    letter-spacing: 0.09em;
+}
