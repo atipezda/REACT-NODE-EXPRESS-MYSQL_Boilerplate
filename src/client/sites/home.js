@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import AuthorizedComp from '../modules/authorizedComp';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class Home extends Component {
   state = {};
@@ -8,10 +7,8 @@ export default class Home extends Component {
   render() {
     return (
       <>
-        <AuthorizedComp>
-          <h1>HOME</h1>
-          <Link to="/login"> go </Link>
-        </AuthorizedComp>
+        <h1>HOME</h1>
+        <Link to="/login"> go </Link>
       </>
     );
   }
