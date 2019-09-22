@@ -3,12 +3,8 @@ const tokenHash = require('../modules/jwt');
 
 module.exports = {
   checkToken: (req, res, next) => {
-    let token = req.headers['x-access-token'] || req.headers.authorization;
-    if (token.startsWith('Bearer ')) {
-      // Remove Bearer from string
-      token = token.slice(7, token.length);
-    }
-
+    console.log(req);
+    const token = req.cookies.jwt;
     if (token) {
       jwt.verify(token, tokenHash, (err, decoded) => {
         if (err) {

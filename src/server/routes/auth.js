@@ -1,53 +1,40 @@
 const express = require('express');
-const sql = require('mssql');
 const jwt = require('jsonwebtoken');
-const dbOptions = require('../modules/mssql');
 const tokenHash = require('../modules/jwt');
 const middleware = require('../modules/middlewares');
+const mc = require('../modules/mysql');
 
 const router = express.Router();
 
-sql.connect(dbOptions);
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { login, passwd } = req.body;
   console.log(req.body);
-  sql
-    .query(
-      `select UserId, UserPassword FROM dbo.[User] where UserName = '${login}'`
-    )
-    .then((result) => {
-      if (result.recordset.length) {
-        if (passwd === result.recordset[0].UserPassword) {
-          // console.log('auth ok');
-          const { UserId } = result.recordset[0];
-          const token = jwt.sign({ UserId }, tokenHash);
-          res.json({ token });
-        } else {
-          console.log('unathorized');
-          res.json({ err: true });
-        }
-      } else {
-        console.log('unathorized');
-        res.json({ err: true });
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  const user = await mc.query(
+    'SELECT userID FROM Users WHERE username = ? and password = ?',
+    [login, passwd]
+  );
+  const userID = user.length ? user[0].userID : null;
+  console.log(userID);
+  if (userID) {
+    const token = jwt.sign({ userID }, tokenHash);
+    res.cookie('jwt', token, { httpOnly: false, secure: false });
+    res.json({ success: true });
+  } else {
+    console.log('unathorized');
+    res.json({ err: true });
+  }
 });
-router.get('/token', middleware.checkToken, (req, res) => {
+router.get('/token', middleware.checkToken, async (req, res) => {
   // console.log(req.decoded.UserId);
-  const userId = req.decoded.UserId;
-  sql
-    .query(`select UserId FROM dbo.[User] where UserId = '${userId}'`)
-    .then((result) => {
-      console.log(result);
-      if (result.recordset[0].UserId) {
-        res.json({ success: true });
-      } else {
-        res.json({ success: false });
-      }
-    });
+  const { userID } = req.decoded;
+  console.log(userID);
+  const authorisation = await mc.query(
+    'SELECT userID FROM Users WHERE userID = ?',
+    [userID]
+  );
+  const isAuth = authorisation.length > 0;
+  if (isAuth) return res.json({ success: true });
+  return res.json({ success: false });
 });
 
 module.exports = router;

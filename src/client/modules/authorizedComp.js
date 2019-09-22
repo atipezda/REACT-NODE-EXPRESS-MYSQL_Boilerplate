@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { getJWT, clearJWT } from '../helpers/jwt';
 
 export default class AuthorizedComp extends Component {
   constructor(props) {
@@ -10,22 +9,15 @@ export default class AuthorizedComp extends Component {
   }
 
   componentDidMount() {
-    const jwt = getJWT();
-    if (!jwt) {
-      // eslint-disable-next-line
-      this.setState({ authorized: false });
-    } else {
-      this.authorizeJWT(jwt);
-    }
+    this.authorizeJWT();
   }
 
-  authorizeJWT(token) {
+  authorizeJWT() {
     axios
-      .get('/auth/token/', { headers: { Authorization: `Bearer ${token}` } })
+      .get('/auth/token/')
       .then((res) => {
         console.log(res);
         if (!res.data.success) {
-          localStorage.removeItem('jwt');
           this.setState({ authorized: false });
         } else if (res.data.success) {
           this.setState({

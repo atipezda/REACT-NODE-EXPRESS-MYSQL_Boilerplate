@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { getJWT } from '../helpers/jwt';
 import '../css/login.css';
 import thermometerImg from '../img/thermo.png';
 
@@ -11,11 +10,7 @@ export default class LoginRoute extends Component {
   }
 
   componentDidMount() {
-    const token = getJWT();
-    if (token) {
-      // eslint-disable-next-line
-      this.props.history.push('/');
-    }
+    this.authorizeJWT();
   }
 
   handleInput = (e) => {
@@ -34,17 +29,30 @@ export default class LoginRoute extends Component {
         passwd
       })
       .then((res) => {
-        if (res.data.token) {
-          localStorage.setItem('jwt', res.data.token);
+        if (res.data.success) {
           console.log('logged in');
           // eslint-disable-next-line
           this.props.history.push('/');
         } else {
-          localStorage.removeItem('jwt');
           this.setState({ isError: true });
         }
       });
   };
+
+  authorizeJWT() {
+    axios
+      .get('/auth/token')
+      .then((res) => {
+        console.log(res);
+        if (res.data.success) {
+          // eslint-disable-next-line
+          this.props.history.push('/');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   render() {
     const { login, passwd } = this.state;
