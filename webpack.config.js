@@ -8,7 +8,9 @@ module.exports = {
   entry: ['babel-polyfill', './src/client/index.js'],
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: 'bundle.js'
+    filename: './bundle.js',
+    pathinfo: true,
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -35,11 +37,12 @@ module.exports = {
   devServer: {
     port: 3000,
     open: false,
+    host: '0.0.0.0',
+    historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:9761',
       '/auth': 'http://localhost:9761'
-    },
-    historyApiFallback: true
+    }
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),
