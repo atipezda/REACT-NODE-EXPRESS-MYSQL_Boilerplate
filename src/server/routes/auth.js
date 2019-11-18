@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
   const { login, passwd } = req.body;
   const user = await mc.query(
-    'SELECT userID FROM Users WHERE username = BINARY ? and password = BINARY ?',
+    'SELECT userID FROM plakaty.Users WHERE username = BINARY ? AND password = BINARY ?',
     [login, passwd]
   );
   const userID = user.length ? user[0].userID : null;
